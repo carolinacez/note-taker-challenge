@@ -2,15 +2,21 @@ const path = require('path');
 const router = require('express').Router();
 const notes = require('../db/note')
 
-router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, ''));
+router.get('/notes', (req, res) => {
+   notes.getNotes()
+   .then(notes => res.json(notes))
+   .catch(err => res.json(err))
 });
-router.post('', (req, res) => {
-    res.sendFile(path.join(__dirname, ''));
+router.post('/notes', (req, res) => {
+   notes.addNewNote(req.body)
+   .then(notes => res.json(notes))
+   .catch(err => res.json(err))
 });
 
-router.delete('', (req, res) => {
-    res.sendFile(path.join(__dirname, ''));
+router.delete('/notes/:id', (req, res) => {
+    notes.removeNote(req.params.id)
+    .then(() => res.json({ok: true}))
+    .catch(err => res.json(err))
 });
 
 module.exports = router;
