@@ -1,20 +1,24 @@
 const util = require('util');
 const fs = require('fs');
+//allows us to produce a unique id for each notes
 const uuidv1 = require('uuid/v1');
 const readFileASync = util.promisify(fs.readFile);
 const writeFileASync = util.promisify(fs.writeFile);
 
 class Notes {
+    //method to read the db.json file
     read() {
         return readFileASync('db/db.json', 'utf8')
     }
-
+    //method to write to the db.json file and turn response into json
     write(note) {
         return writeFileASync('db/db.json', JSON.stringify(note))
     }
-
+    //getNotes method
     getNotes() {
+        //read db.json 
         return this.read()
+        //take reponse -notes and add them to the db.json file
         .then((notes)=>{
             let updatedNotes;
             try{
