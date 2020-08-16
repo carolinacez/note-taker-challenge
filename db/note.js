@@ -32,13 +32,16 @@ class Notes {
     }
 
     addNewNote(note) {
+        //note is going to contain titale and text
         const {title, text} = note;
+        // if there is no title or text throw an error 
         if(!title || !text){
             throw new Error('Note must have title and text')
         }
         const newNote = {title, text, id:uuidv1()}
-
+        
         return this.getNotes()
+        //get all the notes and add new note
         .then(notes => [...notes, newNote])
         .then(updateNote => this.write(updateNote))
         .then(() => newNote)
